@@ -13,3 +13,9 @@ If you do not know how to use git, then here are some good reference websites:
 ## IDE: PHPStorm
 I always recommend the Jetbrains IDEs for development. Perhaps we can all try to use PHPStorm: 
 * https://www.jetbrains.com/phpstorm/download/#section=windows
+
+## Skeleton: A CSS Boilerplate framework
+I decided that to make development faster - I added this CSS boiler plate framework called Skeleton.
+Skeleton provides some nice styles for small projects like one we have here. Hopefully, it will make us
+not have to focus too much on prettifying up the html pages that we develop.
+* Skeleton: http://getskeleton.com/
