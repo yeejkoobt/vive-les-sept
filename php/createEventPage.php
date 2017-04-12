@@ -36,7 +36,56 @@
  * Time: 11:35 PM
  */
 // Setup the connection info and connect - Keep the connectDB.php file off of Github
-//require 'connectDB.php';
+require 'connectDB.php';
+// define variables and set to empty values
+$hostId = "";
+$eventName = "";
+$eventDescription = "";
+$eventTimeBegins = "";
+$eventTimeEnd = "";
+$eventCountry = "";
+$eventAddress = "";
+$eventState = "";
+$eventCity = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $eventName = normalizeData($_POST["eventName"]);
+    $eventDescription = normalizeData($_POST["eventDescription"]);
+    $eventTimeBegins = normalizeData($_POST["eventTimeBegins"]);
+    $eventTimeEnd = normalizeData($_POST["eventTimeEnds"]);
+    $eventCountry = normalizeData($_POST["eventCountry"]);
+    $eventAddress = normalizeData($_POST["eventAddress"]);
+    $eventState = normalizeData($_POST["eventState"]);
+    $eventCity = normalizeData($_POST["eventCity"]);
+
+    // Get the user's id and use that as the poster's id
+    $sql = "SELECT users.user_id FROM csc4710team7 AS users WHERE users.id=1";
+    $result = query($mysqli, $sql);
+    $row = $result->fetch_assoc();
+    $hostId = $row["user_id"];
+
+    // Insert the event data into the DB
+    $sql = "INSERT INTO csc4710team7.tbl_event " .
+        "(host_id, name, description, country, city, state, address, time_begins, time_ends) " .
+        "VALUES($hostID, 
+                $eventName, 
+                $eventDescription, 
+                $eventCountry, 
+                $eventCity, 
+                $eventAddress, 
+                $eventTimeBegins, 
+                $eventTimeEnd)";
+    $result = query($mysqli, $sql);
+    echo "Inserted the event into tbl_event<br>";
+}
+
+function normalizeData($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
 ?>
 <body bgcolor="#AFEBBC">
@@ -50,8 +99,8 @@
                 Event Name: <input type="text" name="eventName"><br>
                 Event Description:<br>
                 <textarea name="eventDescription"></textarea><br>
-                Event Time Begins: <input type="date" name="eventTimeBegins"><br>
-                Event Time Ends: <input type="date" name="eventTimeEnds"><br>
+                Event Time Begins: <input type="datetime" name="eventTimeBegins"><br>
+                Event Time Ends: <input type="datetime" name="eventTimeEnds"><br>
                 Event Country: <input type="text" name="eventCountry"><br>
                 Event Address: <input type="text" name="eventAddress"><br>
                 Event State:
@@ -108,7 +157,7 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select><br>
-                Event City: <input type="text" name="eventState"><br>
+                Event City: <input type="text" name="eventCity"><br>
                 <input type="submit" name="submitButton">
             </form>
         </div>
