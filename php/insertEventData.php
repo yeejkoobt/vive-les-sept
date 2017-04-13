@@ -8,7 +8,7 @@
 // Setup the connection info and connect - Keep the connectDB.php file off of Github
 require 'connectDB.php';
 // define variables and set to empty values
-$hostUserName = $_SESSION["userName"]; // Assume that the username has been put into a userName Session Key
+$hostUsername = $_SESSION["username"]; // Assume that the username has been put into a username Session Key
 $hostId = "";
 $eventName = "";
 $eventDescription = "";
@@ -20,6 +20,12 @@ $eventState = "";
 $eventCity = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the user's id and use that as the poster's id
+    $sql = "SELECT users.user_id FROM csc4710team7 AS users WHERE users.username=$hostUsername";
+    $result = query($mysqli, $sql);
+    $row = $result->fetch_assoc();
+    $hostId = $row["user_id"];
+
     $eventName = normalizeData($_POST["eventName"]);
     $eventDescription = normalizeData($_POST["eventDescription"]);
     $eventTimeBegins = normalizeData($_POST["eventTimeBegins"]);
@@ -28,12 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $eventAddress = normalizeData($_POST["eventAddress"]);
     $eventState = normalizeData($_POST["eventState"]);
     $eventCity = normalizeData($_POST["eventCity"]);
-
-    // Get the user's id and use that as the poster's id
-    $sql = "SELECT users.user_id FROM csc4710team7 AS users WHERE users.username=$hostUserName";
-    $result = query($mysqli, $sql);
-    $row = $result->fetch_assoc();
-    $hostId = $row["user_id"];
 
     // Insert the event data into the DB
     $sql = "INSERT INTO csc4710team7.tbl_event " .
