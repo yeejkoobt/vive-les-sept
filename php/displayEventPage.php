@@ -73,34 +73,34 @@
                     $eventNameError = "Event address is required";
                     $isAllDataFieldsSet = false;
                 } else {
-                    $eventName = normalizeData($_POST["eventAddress"]);
+                    $eventAddress = normalizeData($_POST["eventAddress"]);
                 }
                 if (empty($_POST["eventCountry"])) {
                     $eventNameError = "Event country is required";
                     $isAllDataFieldsSet = false;
                 } else {
-                    $eventName = normalizeData($_POST["eventCountry"]);
+                    $eventCountry = normalizeData($_POST["eventCountry"]);
                 }
                 if (empty($_POST["eventState"])) {
                     $eventNameError = "Event state is required";
                     $isAllDataFieldsSet = false;
                 } else {
-                    $eventName = normalizeData($_POST["eventState"]);
+                    $eventState = normalizeData($_POST["eventState"]);
                 }
                 if (empty($_POST["eventCity"])) {
                     $eventNameError = "Event city is required";
                     $isAllDataFieldsSet = false;
                 } else {
-                    $eventName = normalizeData($_POST["eventCity"]);
+                    $eventCity = normalizeData($_POST["eventCity"]);
                 }
 
                 if ($isAllDataFieldsSet == true) {
-                    $sql = "SELECT * FROM csc4710team7.tbl_event AS event" .
-        "WHERE event.name = $eventName AND" .
-              "event.address = $eventAddress AND" .
-              "event.country = $eventCountry AND" .
-              "event.state = $eventState AND" .
-              "event.city = $eventCity";
+                    $sql = "SELECT * FROM csc4710team7.tbl_event AS event " .
+        "WHERE event.name = \"$eventName\" AND " .
+              "event.address = \"$eventAddress\" AND " .
+              "event.country = \"$eventCountry\" AND " .
+              "event.state = \"$eventState\" AND " .
+              "event.city = \"$eventCity\";";
 
                     $result = query($mysqli, $sql);
                     while ($row = $result->fetch_assoc()) {
@@ -113,7 +113,7 @@
                     }
                 }
             } ?>
-            <form name="getEvent" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <form name="getEvent" method="post" action="displayEventPage.php">
                 Event Name: <input type="text" name="eventName">
                 <span class="error">* <?php echo $eventNameError; ?></span><br><br>
                 Event Address: <input type="text" name="eventAddress">
