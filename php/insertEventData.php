@@ -8,8 +8,9 @@
 // Setup the connection info and connect - Keep the connectDB.php file off of Github
 require 'connectDB.php';
 // define variables and set to empty values
-$hostUsername = $_SESSION["username"]; // Assume that the username has been put into a username Session Key
-$hostId = "";
+header('refresh:1;url=login.php');
+$hostUserName = $_COOKIE["username"]; // Assume that the username has been put into a username into a cookie
+$hostId = $_COOKIE["user_id"];// Assume that the user id has been put into a cookie
 $eventName = "";
 $eventDescription = "";
 $eventTimeBegins = "";
@@ -38,16 +39,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert the event data into the DB
     $sql = "INSERT INTO csc4710team7.tbl_event " .
         "(host_id, name, description, country, city, state, address, time_begins, time_ends) " .
-        "VALUES($hostID, 
-                $eventName, 
-                $eventDescription, 
-                $eventCountry, 
-                $eventCity, 
-                $eventAddress, 
-                $eventTimeBegins, 
-                $eventTimeEnd)";
+        "VALUES(\"$hostId\", " .
+        "\"$eventName\", " .
+        "\"$eventDescription\", " .
+        "\"$eventCountry\", " .
+        "\"$eventCity\", " .
+        "\"$eventState\", " .
+        "\"$eventAddress\", " .
+        "\"$eventTimeBegins\", " .
+        "\"$eventTimeEnd\");";
     $result = query($mysqli, $sql);
-    echo "Inserted the event into tbl_event<br>";
+    phpAlert("$eventName was successfully created!");
+//    echo "Inserted the event into tbl_event<br>";
+}
+
+function phpAlert($msg)
+{
+    echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 }
 
 function normalizeData($data)
