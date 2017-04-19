@@ -1,5 +1,5 @@
 # Vive Les Sept
-A small social media application similar to that of Facebook written in HTML, CSS, and HTML
+A small social media application similar to that of Facebook written in HTML, CSS, and PHP
 
 ## Maintenance
 Try not to commit directly onto the master branch when developing. Always try to open a new branch and do a pull request when ready to merge so that others can monitor and review changes.
