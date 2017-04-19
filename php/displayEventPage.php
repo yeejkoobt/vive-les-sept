@@ -96,11 +96,11 @@
 
                 if ($isAllDataFieldsSet == true) {
                     $sql = "SELECT * FROM csc4710team7.tbl_event AS event " .
-        "WHERE event.name = \"$eventName\" AND " .
-              "event.address = \"$eventAddress\" AND " .
-              "event.country = \"$eventCountry\" AND " .
-              "event.state = \"$eventState\" AND " .
-              "event.city = \"$eventCity\";";
+                        "WHERE event.name = \"$eventName\" AND " .
+                        "event.address = \"$eventAddress\" AND " .
+                        "event.country = \"$eventCountry\" AND " .
+                        "event.state = \"$eventState\" AND " .
+                        "event.city = \"$eventCity\";";
 
                     $result = query($mysqli, $sql);
                     while ($row = $result->fetch_assoc()) {
