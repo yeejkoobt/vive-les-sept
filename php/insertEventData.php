@@ -21,12 +21,6 @@ $eventState = "";
 $eventCity = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the user's id and use that as the poster's id
-    $sql = "SELECT users.user_id FROM csc4710team7 AS users WHERE users.username=$hostUsername";
-    $result = query($mysqli, $sql);
-    $row = $result->fetch_assoc();
-    $hostId = $row["user_id"];
-
     $eventName = normalizeData($_POST["eventName"]);
     $eventDescription = normalizeData($_POST["eventDescription"]);
     $eventTimeBegins = normalizeData($_POST["eventTimeBegins"]);

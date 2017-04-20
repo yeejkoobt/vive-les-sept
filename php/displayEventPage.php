@@ -110,14 +110,16 @@
 
                     $result = query($mysqli, $sql);
                     if ($result->num_rows > 0) {
-                        $tableOfResults .= "<table><tr><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";
+                        $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Attend?</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             $tableOfResults .= "<tr>\n<td>" .
+                                $row["event_id"] . "</td>\n<td>" .
                                 $row["name"] . "</td>\n<td>" .
                                 $row["address"] . "</td>\n<td>" .
                                 $row["country"] . "</td>\n<td>" .
                                 $row["state"] . "</td>\n<td>" .
-                                $row["city"] . "</td></tr>";
+                                $row["city"] . "</td>" .
+                                "<td><form method='post' action='attendEvent.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Attend' style='width: 100%'></form></td></tr>";
                         }
                         $tableOfResults .= "</table>";
                     }
@@ -125,19 +127,21 @@
                 } else {
                     // Select all results from the database and display them in a table.
                     $sql = "SELECT * FROM csc4710team7.tbl_event AS event;";
-
                     $result = query($mysqli, $sql);
                     if ($result->num_rows > 0) {
-                        $tableOfResults .= "<table><tr><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";
+                        $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Attend?</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             $tableOfResults .= "<tr>\n<td>" .
+                                $row["event_id"] . "</td>\n<td>" .
                                 $row["name"] . "</td>\n<td>" .
                                 $row["address"] . "</td>\n<td>" .
                                 $row["country"] . "</td>\n<td>" .
                                 $row["state"] . "</td>\n<td>" .
-                                $row["city"] . "</td>\n";
+                                $row["city"] . "</td>\n" .
+                                "<td><form method='post' action='attendEvent.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Attend' style='width: 100%'></form></td></tr>";
                         }
                         $tableOfResults .= "</table>";
+
                     }
                 }
             } ?>
@@ -209,7 +213,7 @@
         </div>
         <div class="row">
             <div class="one-half column">
-                <?php echo $tableOfResults;?>
+                <?php echo $tableOfResults; ?>
             </div>
         </div>
     </div>
