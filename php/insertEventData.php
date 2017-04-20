@@ -8,7 +8,7 @@
 // Setup the connection info and connect - Keep the connectDB.php file off of Github
 require 'connectDB.php';
 // define variables and set to empty values
-header('refresh:1;url=login.php');
+header('refresh:2;url=html/eventIndexPage.html');
 $hostUserName = $_COOKIE["username"]; // Assume that the username has been put into a username into a cookie
 $hostId = $_COOKIE["user_id"];// Assume that the user id has been put into a cookie
 $eventName = "";
@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "\"$eventTimeBegins\", " .
         "\"$eventTimeEnd\");";
     $result = query($mysqli, $sql);
+
     phpAlert("$eventName was successfully created!");
 //    echo "Inserted the event into tbl_event<br>";
 }
