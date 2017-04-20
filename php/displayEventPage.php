@@ -20,7 +20,12 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/skeleton.css">
-    <!-- Favicon
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style
+            <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
@@ -52,6 +57,7 @@
             $eventCountry = "";
             $eventState = "";
             $eventCity = "";
+            $tableOfResults = "";
 
             // Initialize the errors to empty strings
             $eventNameError = "";
@@ -103,13 +109,35 @@
                         "event.city = \"$eventCity\";";
 
                     $result = query($mysqli, $sql);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>\n<td>" .
-                            $row["name"] . "</td>\n<td>" .
-                            $row["address"] . "</td>\n<td>" .
-                            $row["country"] . "</td>\n<td>" .
-                            $row["state"] . "<td>\n</td><td>" .
-                            $row["city"] . "</td></tr>\n";
+                    if ($result->num_rows > 0) {
+                        $tableOfResults .= "<table><tr><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";
+                        while ($row = $result->fetch_assoc()) {
+                            $tableOfResults .= "<tr>\n<td>" .
+                                $row["name"] . "</td>\n<td>" .
+                                $row["address"] . "</td>\n<td>" .
+                                $row["country"] . "</td>\n<td>" .
+                                $row["state"] . "</td>\n<td>" .
+                                $row["city"] . "</td></tr>";
+                        }
+                        $tableOfResults .= "</table>";
+                    }
+
+                } else {
+                    // Select all results from the database and display them in a table.
+                    $sql = "SELECT * FROM csc4710team7.tbl_event AS event;";
+
+                    $result = query($mysqli, $sql);
+                    if ($result->num_rows > 0) {
+                        $tableOfResults .= "<table><tr><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";
+                        while ($row = $result->fetch_assoc()) {
+                            $tableOfResults .= "<tr>\n<td>" .
+                                $row["name"] . "</td>\n<td>" .
+                                $row["address"] . "</td>\n<td>" .
+                                $row["country"] . "</td>\n<td>" .
+                                $row["state"] . "</td>\n<td>" .
+                                $row["city"] . "</td>\n";
+                        }
+                        $tableOfResults .= "</table>";
                     }
                 }
             } ?>
@@ -178,6 +206,11 @@
                 <span class="error">* <?php echo $eventCityError; ?></span><br><br>
                 <input type="submit" id="submitButton">
             </form>
+        </div>
+        <div class="row">
+            <div class="one-half column">
+                <?php echo $tableOfResults;?>
+            </div>
         </div>
     </div>
 </div>
