@@ -51,17 +51,19 @@
 
             $result = query($mysqli, $sql);
             if ($result->num_rows > 0) {
-                $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";
+                $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Description</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Participants</th></tr>";
                 while ($row = $result->fetch_assoc()) {
                     $tableOfResults .= "<tr>\n<td>" .
                         $row["event_id"] . "</td>\n<td>" .
                         $row["name"] . "</td>\n<td>" .
+                        $row["description"] . "</td>\n<td>" .
                         $row["address"] . "</td>\n<td>" .
                         $row["country"] . "</td>\n<td>" .
                         $row["state"] . "</td>\n<td>" .
-                        $row["city"] . "</td></tr>";
+                        $row["city"] . "</td>" .
+                        "<td><form method='post' action='displayEventParticipants.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Display Participants' style='width: 100%'></form></td>";
                 }
-                $tableOfResults .= "</table>";
+                $tableOfResults .= "</table><br>";
                 echo $tableOfResults;
             }
             ?>
