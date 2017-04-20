@@ -10,7 +10,7 @@
  */
 require 'connectDB.php';
 // define variables and set to empty values
-header('refresh:2;url=displayEventPage.php');
+header('refresh:2;url=html/eventIndexPage.html');
 
 $participantId = $_COOKIE["user_id"];// Assume that the user id has been put into a cookie
 
