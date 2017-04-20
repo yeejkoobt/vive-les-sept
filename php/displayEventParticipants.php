@@ -46,9 +46,29 @@
             $participantId = $_COOKIE['user_id'];
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $eventId = $_POST["eventId"];
+                $sql = "SELECT * FROM csc4710team7.tbl_user AS user " .
+                    "JOIN csc4710team7.tbl_event AS event ON user.user_id=event.host_id WHERE event.event_id=\"$eventId\";";
+                $result = query($mysqli, $sql);
+
+                // Display the host information
+                if ($result->num_rows > 0) {
+                    $tableOfResults .= "<table><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Email</th></tr>";
+                    while ($row = $result->fetch_assoc()) {
+                        $tableOfResults .= "<tr>\n<td>" .
+                            $row["first_name"] . "</td>\n<td>" .
+                            $row["last_name"] . "</td>\n<td>" .
+                            $row["phone"] . "</td>\n<td>" .
+                            $row["email"] . "</td>\n</tr>";
+                    }
+                    $tableOfResults .= "</table><br>";
+                    echo "<h2>Event Host Information</h2>";
+                    echo $tableOfResults;
+                }
+                // Display the event information
+
+                $tableOfResults = "";
                 $sql = "SELECT * FROM csc4710team7.tbl_event AS event " .
                     "WHERE event.event_id = \"$eventId\";";
-
                 $result = query($mysqli, $sql);
                 if ($result->num_rows > 0) {
                     $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Description</th><th>Address</th><th>Country</th><th>State</th><th>City</th></tr>";

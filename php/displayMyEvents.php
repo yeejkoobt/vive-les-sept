@@ -47,7 +47,33 @@
 
             $sql = "SELECT * FROM csc4710team7.tbl_event_participant AS eventParticipant " .
                 "JOIN csc4710team7.tbl_event AS event ON eventParticipant.event_id=event.event_id\n" .
-                "WHERE eventParticipant.participant_id = \"$participantId\";";
+                "WHERE eventParticipant.participant_id=\"$participantId\";";
+
+            $result = query($mysqli, $sql);
+            if ($result->num_rows > 0) {
+                $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Description</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Participants</th></tr>";
+                while ($row = $result->fetch_assoc()) {
+                    $tableOfResults .= "<tr>\n<td>" .
+                        $row["event_id"] . "</td>\n<td>" .
+                        $row["name"] . "</td>\n<td>" .
+                        $row["description"] . "</td>\n<td>" .
+                        $row["address"] . "</td>\n<td>" .
+                        $row["country"] . "</td>\n<td>" .
+                        $row["state"] . "</td>\n<td>" .
+                        $row["city"] . "</td>" .
+                        "<td><form method='post' action='displayEventParticipants.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Display Participants' style='width: 100%'></form></td>";
+                }
+                $tableOfResults .= "</table><br>";
+                echo "<h2>Events You Are Participating In:</h2>";
+                echo $tableOfResults;
+            }
+
+            // Display the events that are hosted by the user
+            echo "<br>";
+            echo "<h2>Your Hosted Events:</h2>";
+            $tableOfResults = "";
+            $sql = "SELECT * FROM csc4710team7.tbl_event AS event " .
+                "WHERE event.host_id=\"$participantId\";";
 
             $result = query($mysqli, $sql);
             if ($result->num_rows > 0) {
