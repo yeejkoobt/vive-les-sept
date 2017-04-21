@@ -116,6 +116,7 @@
                             $tableOfResults .= "<tr>\n<td>" .
                                 $row["event_id"] . "</td>\n<td>" .
                                 $row["name"] . "</td>\n<td>" .
+                                $row["description"] . "</td>\n<td>" .
                                 $row["address"] . "</td>\n<td>" .
                                 $row["country"] . "</td>\n<td>" .
                                 $row["state"] . "</td>\n<td>" .

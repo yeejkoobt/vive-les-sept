@@ -51,7 +51,7 @@
 
             $result = query($mysqli, $sql);
             if ($result->num_rows > 0) {
-                $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Description</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Participants</th></tr>";
+                $tableOfResults .= "<table><tr><th>Event ID</th><th>Event Name</th><th>Description</th><th>Address</th><th>Country</th><th>State</th><th>City</th><th>Participants</th><th>Un-attend?</th></tr>";
                 while ($row = $result->fetch_assoc()) {
                     $tableOfResults .= "<tr>\n<td>" .
                         $row["event_id"] . "</td>\n<td>" .
@@ -61,7 +61,8 @@
                         $row["country"] . "</td>\n<td>" .
                         $row["state"] . "</td>\n<td>" .
                         $row["city"] . "</td>" .
-                        "<td><form method='post' action='displayEventParticipants.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Display Participants' style='width: 100%'></form></td>";
+                        "<td><form method='post' action='displayEventParticipants.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Display Participants' style='width: 100%'></form></td>" .
+                        "<td><form method='post' action='deleteAttendedEvent.php'><input type='hidden' name='eventId' value='" . $row['event_id'] . "'><input type='submit' value='Un-attend' style='width: 100%'></form></td>";
                 }
                 $tableOfResults .= "</table><br>";
                 echo "<h2>Events You Are Participating In:</h2>";
